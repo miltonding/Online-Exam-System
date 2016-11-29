@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.augmentun.exam.model.Exam">
+
+  <resultMap type="Exam" id="ExamMap">
+    <id column="id" property="id"/>
+    <result column="create_user_id" property="createUserId"/>
+    <result column="creator_name" property="creatorName"/>
+    <result column="exam_name" property="examName"/>
+    <result column="description" property="description"/>
+    <result column="single_question_score" property="singleQuestionScore"/>
+    <result column="quantity" property="quantity"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="effcient_time" property="effcientDate"/>
+    <result column="end_time" property="endTime"/>
+    <result column="exam_duration" property="examDuration"/>
+    <result column="total_score" property="totalScore"/>
+    <result column="pass_criteria" property="passCriteria"/>
+    <result column="is_draft" property="isDraft"/>
+  </resultMap>
+
+  <sql id="keywordSQL">
+    <if test="keyword != '' and keyword != null">
+         <![CDATA[
+             AND (exam_name LIKE CONCAT('%', CONCAT(#{keyword}, '%'))
+                    OR description LIKE CONCAT('%', CONCAT(#{keyword}, '%')))
+         ]]>
+    </if>
+  </sql>
+
+  <sql id="dateSQL">
+    <if test="startDate != '' and endDate == ''">
+        <![CDATA[
+            AND 
+                effcient_time > #{startDate}
+        ]]>
+    </if>
+    <if test="startDate == '' and endDate != ''">
+         <![CDATA[
+            AND
+                effcient_time < #{endDate}
+         ]]>
+    </if>
+    <if test="startDate != '' and endDate != ''">
+        <![CDATA[
+            AND
+                effcient_time
+            BETWEEN
+                #{startDate}
+            AND
+                #{endDate}
+         ]]>
+    </if>
+  </sql>
+
+  <sql id="orderSQL">
+      <if test="order == 'idASC'">
+        <![CDATA[
+           ORDER BY
+               id
+           ASC
+        ]]>
+     </if>
+    <if test="order == 'idDESC'">
+        <![CDATA[
+            ORDER BY
+                id
+            DESC
+        ]]>
+     </if>
+
+     <if test="order == 'nameASC'">
+         <![CDATA[
+             ORDER BY
+                 exam_name
+             ASC
+          ]]>
+     </if>
+     <if test="order == 'nameDESC'">
+         <![CDATA[
+             ORDER BY
+                 exam_name
+             DESC
+         ]]>
+     </if>
+
+     <if test="order == 'timeASC'">
+         <![CDATA[
+             ORDER BY
+                effcient_time
+             ASC
+         ]]>
+     </if>
+     <if test="order == 'timeDESC'">
+         <![CDATA[
+             ORDER BY
+                effcient_time
+             DESC
+         ]]>
+     </if>
+  </sql>
+  <insert id="createExam" parameterType="Exam" useGeneratedKeys="true" keyProperty="id">
+      <![CDATA[
+            INSERT INTO 
+                exam (create_user_id, exam_name, description, single_question_score, quantity, created_time, effcient_time, end_time, exam_duration, total_score, pass_criteria, is_draft, is_available)
+            VALUES 
+                (#{createUserId}, #{examName}, #{description}, #{singleQuestionScore}, #{quantity}, NOW(), #{effcientTime}, date_add(#{effcientTime}, interval #{examDuration} minute), #{examDuration}, #{totalScore}, #{passCriteria}, #{isDraft}, 1)
+        ]]>
+  </insert>
+
+  <select id="getExamQuantity" parameterType="ExamPagination" resultType="int">
+          <![CDATA[
+              SELECT 
+                  COUNT(1)
+              FROM
+                   exam
+              WHERE
+                   is_available = 1
+           ]]>
+           <include refid="keywordSQL"/>
+           <include refid="dateSQL"/> 
+  </select>
+
+  <select id="listExam" parameterType="ExamPagination" resultMap="ExamMap">
+       <![CDATA[
+            SELECT
+                e.id, e.create_user_id, u.chinese_name AS creator_name, e.exam_name, e.description, e.single_question_score, e.quantity, e.created_time, e.effcient_time, e.end_time, e.exam_duration, e.total_score, e.pass_criteria, e.is_draft
+            FROM 
+                exam e
+            LEFT JOIN 
+                user u
+            ON 
+                create_user_id = u.id
+            WHERE 
+                is_available = 1
+        ]]>
+        <include refid="keywordSQL"/>
+        <include refid="dateSQL"/> 
+        <include refid="orderSQL"/>
+         <![CDATA[
+             LIMIT 
+                #{offset}, #{pageSize}
+         ]]>
+  </select>
+  
+  <select id="getExamById" parameterType="int" resultMap="ExamMap">
+         <![CDATA[
+             SELECT
+                 e.id, e.create_user_id, u.chinese_name AS creator_name, e.exam_name, e.description, e.single_question_score, e.quantity, e.created_time, e.effcient_time, e.end_time, e.exam_duration, e.total_score, e.pass_criteria, e.is_draft
+             FROM 
+                 exam e
+             LEFT JOIN 
+                 user u
+             ON 
+                 create_user_id = u.id
+             WHERE 
+                 is_available = 1
+             AND
+                 e.id = #{_parameter}
+          ]]>
+  </select>
+  
+  <update id="updateExam" parameterType="Exam">
+      <![CDATA[      
+          UPDATE
+              exam
+          SET
+              exam_name = #{examName}, description = #{description}, exam_duration= #{examDuration}, end_time = date_add(#{effcientTime}, interval #{examDuration} minute), quantity = #{quantity}, single_question_score = #{singleQuestionScore}, total_score = #{totalScore}, pass_criteria = #{passCriteria}, is_draft = 0
+          WHERE
+              id = #{id}
+          ]]>
+  </update>
+  
+  <update id="updateAvailable" parameterType="List">
+      <![CDATA[
+          UPDATE
+              exam
+          SET
+              is_available = 0
+          WHERE
+              id
+          IN
+       ]]>  
+       <foreach collection="list" item = "deleteId" open="(" separator="," close=")">
+           #{deleteId}
+       </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.augmentun.exam.model.Paper">
+
+  <resultMap type="Paper" id="paperMap">
+      <id column="id" property="id"/>
+      <result column="exam_id" property="examId"/>
+      <result column="question_id_array" property="questionIdArray"/>
+  </resultMap>
+
+  <insert id="createPaper" parameterType="Paper" useGeneratedKeys="true" keyProperty="id">
+      <![CDATA[
+          INSERT INTO
+              paper(exam_id, question_id_array)
+          VALUES
+              (#{examId}, #{questionIdArray})
+      ]]>
+  </insert>
+  
+  <update id="updateQuestionIdArr" parameterType="Paper">
+      <![CDATA[
+          UPDATE
+               paper
+          SET
+               question_id_array = #{questionIdArray}
+          WHERE
+               exam_id = #{examId}
+      ]]>
+  </update>
+  
+  <select id="getPaperQuantity" parameterType="int">
+      <![CDATA[
+         SELECT
+             COUNT(1)
+         FROM
+             paper p
+         WHERE
+             exam_id = #{examId}
+      ]]>
+  </select>
+  
+  <select id="getPaperByExamId" parameterType="int" resultMap="paperMap">
+      <![CDATA[
+          SELECT
+              *
+          FROM
+              paper 
+          WHERE
+              exam_id = #{_parameter}
+      ]]>
+  </select>
+</mapper>

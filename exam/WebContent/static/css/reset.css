@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+a {
+    text-decoration:none;
+}
+
+ul, li, ol {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+button {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}

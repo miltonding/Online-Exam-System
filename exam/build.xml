@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<project name="testSpring" default="run-test" basedir=".">
+    <property environment="env" /> 
+    <property name="src.dir" location="src" /> 
+    <property name="test.src.dir" location="test" /> 
+    <property name="conf.dir" location="config" /> 
+    <property name="web.dir" location="WebContent" /> 
+    <property name="lib.dir" location="${web.dir}/WEB-INF/lib" /> 
+    <property name="cobertura.home" location="D:\Java\cobertura-1.9.4.1-bin\cobertura-1.9.4.1" /> 
+    <property name="cobertura.lib.dir" location="${cobertura.home}/lib" /> 
+    <property name="build.dir" location="build" /> 
+    <property name="build.classes" location="${build.dir}/classes" /> 
+    <property name="build.test.dir" location="${build.dir}/test" /> 
+    <property name="build.test.classes" location="${build.test.dir}/classes" /> 
+    <property name="build.test.report" location="${build.test.dir}/report" /> 
+    <property name="build.doc.dir" location="${build.dir}/doc" /> 
+    <property name="build.war.dir" location="${build.dir}/war" /> 
+    <property name="test.lib.dir" location="lib" /> 
+    <property name="cobertura.dir" location="${build.dir}/cobertura/" /> 
+    <property name="cobertura.html.dir" location="${cobertura.dir}/html" /> 
+    <property name="cobertura.class.dir" location="${cobertura.dir}/class" /> 
+      <!--path-->
+    <path id="compile-classpath">
+          <fileset dir="${lib.dir}" includes="*.jar" excludes="jstl-1.2.jar"/> 
+          <fileset dir="${env.CATALINA_HOME}/lib" includes="*.jar" /> 
+          <fileset dir="${test.lib.dir}" includes="*.jar" /> 
+          <fileset dir="${cobertura.lib.dir}" includes="*.jar" /> 
+    </path>
+
+    <path id="compile-test-classpath">
+          <path refid="compile-classpath" /> 
+          <pathelement location="${build.classes}" /> 
+    </path>
+
+    <path id="run-test-classpath">
+          <path refid="compile-test-classpath" /> 
+          <pathelement location="${build.test.classes}" /> 
+    </path>
+      <taskdef classpathref="run-test-classpath" resource="tasks.properties" /> 
+    <target name="clean">
+          <delete dir="${build.dir}" /> 
+    </target>
+
+    <target name="init" depends="clean">
+      <mkdir dir="${build.dir}" /> 
+      <mkdir dir="${build.classes}" /> 
+      <mkdir dir="${build.test.dir}" /> 
+      <mkdir dir="${build.test.classes}" /> 
+      <mkdir dir="${build.test.report}" /> 
+      <mkdir dir="${build.doc.dir}" /> 
+      <mkdir dir="${build.war.dir}" /> 
+      <mkdir dir="${build.war.dir}/WEB-INF" /> 
+      <mkdir dir="${build.war.dir}/WEB-INF/class" /> 
+      <mkdir dir="${cobertura.dir}" /> 
+      <mkdir dir="${cobertura.html.dir}" /> 
+      <mkdir dir="${cobertura.class.dir}" /> 
+    </target>
+
+    <target name="compile" depends="init">
+         <javac destdir="${build.classes}" srcdir="${src.dir}" classpathref="compile-classpath" includeantruntime="true" failonerror="true" debug="true" /> 
+        <copy todir="${build.classes}">
+              <fileset dir="${src.dir}" includes="**/*.*" excludes="**/*.java" /> 
+          </copy>
+        <copy todir="${build.classes}">
+              <fileset dir="${conf.dir}" /> 
+          </copy>
+    </target>
+
+    <target name="compile-test" depends="compile">
+          <javac destdir="${build.test.classes}" srcdir="${test.src.dir}" includeantruntime="true" failonerror="true" classpathref="compile-test-classpath" /> 
+    </target>
+
+    <target name="run-test" depends="compile-test">
+          <delete file="cobertura.ser" /> 
+        <cobertura-instrument todir="${cobertura.class.dir}">
+               <fileset dir="${build.classes}">
+                  <include name="**/*.class" /> 
+              </fileset>
+          </cobertura-instrument>
+          <junit fork="true" haltonfailure="false" failureproperty="junit.fail">
+            <jvmarg value="-XX:-UseSplitVerifier"/>
+              <classpath location="${cobertura.class.dir}" /> 
+              <classpath location="${build.classes}" /> 
+            <classpath location="${build.test.classes}" /> 
+            <classpath refid="compile-classpath" /> 
+            <formatter type="xml" /> 
+            <test name="${testcase}" todir="${reports.xml.dir}" if="testcase" /> 
+            <batchtest todir="${build.test.report}" unless="testcase">
+                  <fileset dir="${test.src.dir}" includes="**/*Test.java" /> 
+              </batchtest>
+          </junit>
+        <junitreport>
+              <fileset dir="${build.test.report}" includes="TEST-*.xml" /> 
+              <report format="frames" todir="${build.test.report}/html" /> 
+          </junitreport>
+
+          <cobertura-report srcdir="${src.dir}" destdir="${cobertura.dir}" format="html" /> 
+         <delete file="cobertura.ser" /> 
+          <fail if="${junit.fail}" message="单元测试失败，具体情况请查询${build.test.report}" /> 
+    </target>
+
+    <target name="doc" depends="run-test">
+        <javadoc sourcepath="${src.dir}" use="true" packagenames="com.*" charset="UTF-8" encoding="UTF-8" docencoding="UTF-8" destdir="${build.doc.dir}">
+              <classpath refid="compile-classpath" /> 
+          </javadoc>
+    </target>
+
+    <target name="unWar" depends="compile-test">
+        <copy todir="${build.war.dir}">
+              <fileset dir="${web.dir}" /> 
+          </copy>
+        <copy todir="${build.war.dir}/WEB-INF/class">
+              <fileset dir="${build.classes}" /> 
+          </copy>
+    </target>
+
+    <target name="war" depends="unWar">
+          <delete file="${build.dir}/${ant.project.name}.war" /> 
+        <war destfile="${build.dir}/${ant.project.name}.war" webxml="${build.war.dir}/WEB-INF/web.xml">
+              <fileset dir="${build.war.dir}" /> 
+          </war>
+    </target>
+
+    <target name="deploy" depends="war">
+          <exec executable="${env.CATALINA_HOME}/bin/shutdown.bat" /> 
+          <delete file="${env.CATALINA_HOME}/webapps/${ant.project.name}.war" /> 
+          <delete dir="${env.CATALINA_HOME}/webapps/${ant.project.name}" /> 
+          <copy todir="${env.CATALINA_HOME}/webapps" file="${build.dir}/${ant.project.name}.war" /> 
+          <exec executable="${env.CATALINA_HOME}/bin/startup.bat" /> 
+      </target>
+
+    <target name="email" depends="war">
+        <mail mailhost="smtp.163.com" mailport="25" user="zhengmenbb@163.com" password="******" subject="Test build">
+              <from address="zhengmenbb@163.com" /> 
+              <replyto address="zhengmenbb@163.com" /> 
+              <to address="zack.liu@augmentum.com" /> 
+              <message>The build has completed</message> 
+          </mail>
+    </target>
+  </project>

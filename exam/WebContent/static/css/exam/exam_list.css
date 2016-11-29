@@ -1,0 +1,462 @@
+@CHARSET "UTF-8";
+/* img*/
+.edit_img {
+    position: absolute;
+    top: 12px;
+    right: 70px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.list_seleted {
+    position: absolute;
+    top: 12px;
+    right: 70px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: url(../images/ICN_Selected_15x15.png.png) white;
+}
+.list_unSeleted {
+    position: absolute;
+    top: 12px;
+    right: 70px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: url(../images/ICN_Unselected_15x15.png.png) white;
+    
+}
+
+.delete_seleted {
+    position: absolute;
+    top: 8px;
+    right: 70px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: url(../images/ICN_Selected_15x15.png.png) white;
+}
+
+.delete_unSeleted {
+    position: absolute;
+    top: 8px;
+    right: 70px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background: url(../images/ICN_Unselected_15x15.png.png) white;
+}
+
+
+.hide_checkbox {
+    position: absolute;
+    top: 5px;
+    right: 50px;
+    display: none;
+}
+.list_edit {
+    position: absolute;
+    top: 8px;
+    right: 125px;
+    width: 15px;
+    height: 15px;    
+}
+
+.search_box {
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 230px;
+    text-indent: 20px;
+    border: 1px solid #296793;
+    border-radius: 3px;
+    font-family: arial;
+    font-size: 12px;
+    color: #5E5E5E;
+}
+
+.serch_icon {
+    position: absolute;
+    top: 25px;
+    left: 390px;
+    width: 15px;
+    height: 20px;
+    z-index: 1;
+    cursor: pointer;
+    
+}
+
+.pre_page_icon {
+    width: 20px;
+    height: 15px;
+    float: left;
+
+}
+
+.nxt_page_icon {
+    margin-left: 10px;
+    width: 20px;
+    height: 15px;
+    float: left;
+
+}
+
+#del_btn {
+    position: absolute;
+    right: 40px;
+    bottom: 12px;
+    width: 80px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;    
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.page_wrapper .go_btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 15px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(254, 153, 1);
+    cursor: pointer;
+    line-height: 15px;
+    text-align: center;
+}
+
+/* current page */
+#current_page {
+    width: 10px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #FE9901;
+    margin-left: 8px;
+    cursor: pointer;
+    float: left; 
+}
+/* column */
+#list_title .title_id {
+    position: absolute;
+    left: 120px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: right;
+    font-weight: bold;
+    color: #OAOAOA;
+}
+
+#list_title .title_name {
+    position: absolute;
+    top: 10px;
+    left: 230px;
+    height: 20px;
+    line-height: 20px;
+    font-weight: bold;
+
+}
+#list_title .id_up {
+    position: absolute;
+    top: 13px;
+    left: 165px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Decrese_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .id_down {
+    position: absolute;
+    top: 13px;
+    left: 165px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Increase_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .name_up {
+    position: absolute;
+    top: 13px;
+    left: 265px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Decrese_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .name_down {
+    position: absolute;
+    top: 13px;
+    left: 265px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Increase_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .time_up {
+    position: absolute;
+    top: 13px;
+    left: 440px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Decrese_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .time_down {
+    position: absolute;
+    top: 13px;
+    left: 440px;
+    width: 10px;
+    height: 15px;
+    background: url(../images/ICN_Increase_10x15.png.png) white no-repeat ;
+    cursor: pointer;
+}
+
+#list_title .effective_time {
+    position: absolute;
+    top: 0px;
+    left: 310px;
+    width: 130px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-family: arial regular;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0A0A0A;
+}
+
+#list_title .duration {
+    position: absolute;
+    top: 0px;
+    left: 510px;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-family: arial regular;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0A0A0A;
+}
+
+#list_title .creator {
+    position: absolute;
+    top: 0px;
+    left: 650px;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-family: arial regular;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0A0A0A;
+}
+
+#list_title .title_edit {
+    position: absolute;
+    top: 0px;
+    right: 128px;
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    color: #0A0A0A;
+}
+
+
+.page_wrapper {
+    position: absolute;
+    width: 300px;
+    height: 15px;
+    left: 340px;
+    top: 330px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.page_wrapper .page_count {
+    width: 10px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #5E5E5E;
+    margin-left: 8px;
+    cursor: pointer;
+    float: left;    
+}
+
+#select_block {
+    width: 10px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #5E5E5E;
+    margin-left: 8px;
+    float: left;    
+    
+}
+.page_wrapper .page_omit {
+    width: 10px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #5E5E5E;
+    margin-left: 8px;
+    cursor: pointer;
+    float: left;    
+}
+.page_wrapper select {
+    width: 40px;
+    height: 15px;
+    line-height: 15px;
+    text-align: left;
+    font-size: 12px;
+    color: #FE9901;
+    float: left;
+}
+
+.page_wrapper input {
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    width: 20px;
+    height: 12px;
+    line-height: 10px;
+    font-size: 10px;
+    text-indent: 5px;
+    border: 1px solid #5E5E5E;
+    border-radius: 3px;
+}
+
+.page_wrapper .per_page {
+    position: absolute;
+    top: 0px;
+    right: 60px;
+    width: 55px;
+    height: 15px;
+    line-height: 15px;
+    color: #5E5E5E;
+    text-align: center;
+    font-size: 12px;
+}
+
+.column_name {
+    position: absolute;
+    top: 0px;
+    left: 200px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+}
+.column_name a {
+    color: #296793;
+}
+
+.column_time {
+    position: absolute;
+    top: 0px;
+    left: 300px;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.column_duration {
+    position: absolute;
+    top: 0px;
+    left: 510px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+}
+.column_creator {
+    position: absolute;
+    top: 0px;
+    left: 650px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.date_area {
+    position: absolute;
+    top: 20px;
+    right:30px;
+    height: 40px;
+    width: 310px;
+}
+.date_area .start_date {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 125px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #296793;
+    border-radius: 3px; 
+}
+
+.date_area .line_between {
+    position: absolute;
+    left: 127px;
+    top: 0px;
+    width: 20px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 30px;
+    border: 1px solid #296793;
+}
+
+.date_area .end_date {
+    position: absolute;
+    top: 0px;
+    left: 148px;
+    width: 125px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #296793;
+    border-radius: 3px;
+}
+
+.date_area .date_search {
+    position: absolute;
+    right: 0px;
+    height: 30px;
+    width: 33px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #296793;
+    border-radius: 3px;
+    color: #FE9901;
+    font-family: arial;
+    font-size: 10px;
+    cursor: pointer;
+}

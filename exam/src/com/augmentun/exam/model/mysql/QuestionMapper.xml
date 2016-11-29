@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.augmentun.exam.model.Question">
+
+  <resultMap type="Question" id="questionMap">
+    <id column="id" property="id"/>
+    <result column="question_number" property="questionNumber"/>
+    <result column="question_name" property="questionName"/>
+    <result column="choice_a" property="choiceA"/>
+    <result column="choice_b" property="choiceB"/>
+    <result column="choice_c" property="choiceC"/>
+    <result column="choice_d" property="choiceD"/>
+    <result column="correct_choice" property="correctChoice"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="updated_time" property="updatedTime"/>
+    <result column="is_available" property="isAvailable"/>
+  </resultMap>
+
+  <select id="findQuestions" parameterType="Pagination" resultMap="questionMap">
+      <![CDATA[
+          SELECT 
+              * 
+          FROM 
+              question 
+          WHERE 
+              is_available = 1
+        ]]>
+      <if test="keyword != '' and keyword != null">
+          <![CDATA[
+              AND 
+                  question_name 
+              LIKE 
+                  CONCAT(CONCAT('%', #{keyword}), '%')
+           ]]>
+      </if>
+      <![CDATA[
+          ORDER BY
+              question_number
+      ]]>
+      <if test="order == 'ASC'">
+          <![CDATA[
+              ASC
+          ]]>
+      </if>
+      <if test="order == 'DESC'">
+          <![CDATA[
+              DESC
+          ]]>
+      </if>
+      <![CDATA[
+          LIMIT
+              #{offset}, #{pageSize}
+          ]]>
+  </select>
+
+  <select id="getQuestionQty" parameterType="String" resultType="int" >
+      <![CDATA[
+          SELECT 
+              COUNT(1) 
+          FROM 
+              question 
+          WHERE 
+              is_available = 1
+       ]]>
+       <if test="_parameter != '' and _parameter != null">
+           <![CDATA[
+               AND 
+                   question_name
+               LIKE
+                   CONCAT(CONCAT('%', #{_parameter}), '%')
+           ]]>
+      </if>
+  </select>
+
+  <insert id="createQuestion" parameterType="Question" useGeneratedKeys="true" keyProperty="id">
+      <![CDATA[
+          INSERT INTO 
+              question (question_number, question_name,choice_a,choice_b,choice_c,choice_d,correct_choice,created_time,updated_time,is_available)
+          VALUES 
+              (#{questionNumber}, #{questionName}, #{choiceA}, #{choiceB}, #{choiceC}, #{choiceD}, #{correctChoice}, NOW(), null, #{isAvailable})
+        ]]>
+  </insert>
+
+  <select id="getQuestionById" parameterType="int" resultMap="questionMap">
+      <![CDATA[
+          SELECT 
+              * 
+          FROM 
+              question 
+          WHERE
+               id = #{id}
+          AND  
+               is_available = 1
+        ]]>
+  </select>
+
+  <delete id="updateQuestionById" parameterType="List">
+      <![CDATA[
+          UPDATE 
+              question
+          SET 
+              is_available = 0
+          WHERE 
+              id
+          IN 
+       ]]>
+       <foreach collection="list" item = "deleteId" open="(" separator="," close=")">
+           #{deleteId}
+       </foreach>
+  </delete>
+
+  <select id="getQuestionQtyById" parameterType="String" resultType="int">
+      <![CDATA[
+          SELECT 
+              COUNT(1) 
+          FROM 
+              question 
+          WHERE 
+              question_number = #{questionNumber}
+          AND 
+              is_available = 1
+      ]]>
+  </select>
+    
+  <select id="findQuestionIdArr" parameterType="int" resultType="int">
+      <![CDATA[
+          select 
+               * 
+          FROM
+              question
+          WHERE
+              is_available = 1
+          ORDER BY
+              RAND()
+          LIMIT
+              #{_parameter}
+      ]]>
+  </select>
+  
+  <select id="findSeletedQuestion" parameterType="List" resultMap="questionMap">
+      <![CDATA[
+           select 
+               * 
+           FROM
+               question
+           WHERE
+               id
+           IN
+      ]]>
+      <foreach collection="list" item="questionId" open="(" separator="," close=")">
+          #{questionId}
+      </foreach>
+  </select>
+</mapper>

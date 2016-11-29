@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+    <!-- JDBC properties -->
+    <bean id="jdbcConfigurer"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="locations" value="classpath:jdbc.properties"/>
+    </bean>
+
+     <!-- Data source -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" scope="singleton" destroy-method="close">      
+     <property name="driverClass" value="${jdbc.driver}"/>
+     <property name="jdbcUrl" value="${jdbc.url}"/>
+     <property name="user" value="${jdbc.username}"/>
+     <property name="password" value="${jdbc.pwd}"/>
+     <property name="initialPoolSize" value="5"/>
+     <property name="acquireIncrement" value="3"/>
+     <property name="minPoolSize" value="5"/>
+     <property name="maxPoolSize" value="20"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+     <property name="dataSource" ref="dataSource"/>
+     <property name="typeAliasesPackage" value="com.augmentun.exam.model"/>
+     <property name="mapperLocations" value="classpath*:com/augmentun/exam/model/mysql/*Mapper.xml" /> 
+    </bean>
+
+    <!-- template -->
+   <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+     <constructor-arg index="0" ref="sqlSessionFactory"/>
+   </bean>
+
+    <!-- dao -->
+    <bean id="baseDao" abstract="true" >
+      <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+    </bean>
+    <bean id="userDao" class="com.augmentun.exam.dao.mybatis.UserDaoImpl" parent="baseDao"/>
+    <bean id="questionDao" class="com.augmentun.exam.dao.mybatis.QuestionDaoImpl" parent="baseDao"/>
+    <bean id="examDao" class="com.augmentun.exam.dao.mybatis.ExamDaoImpl" parent="baseDao"/>
+    <bean id="paperDao" class="com.augmentun.exam.dao.mybatis.PaperDaoImpl" parent="baseDao"/>
+
+    <!-- TransactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- define aspect -->
+    <bean id="logMethodTimeAspect" class="com.augmentun.exam.common.LogMethodTimeAspect"/>
+    <!-- spring aop -->
+    <bean id="logMethodTime" class="com.augmentun.exam.common.LogMethodTime"/>
+    
+    <!-- define aspect -->
+     <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="create*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="add*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="remove*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="update*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="edit*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="batchUpdate" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- Aop -->
+    <aop:config> 
+        <aop:pointcut id="pc" expression="execution(* com.augmentun.exam.service..*.*(..))" /> 
+        <aop:advisor advice-ref="logMethodTime" pointcut-ref="pc" order="1"/> 
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc" order="2"/> 
+
+        <aop:aspect id="logMethodTimeAspect" ref="logMethodTimeAspect">
+          <aop:pointcut id="businessService" expression="execution(* com.augmentun.exam.service..*.*(..))" /> 
+          <aop:before pointcut-ref="businessService" method="doBefore"/>
+          <aop:around pointcut-ref="businessService" method="doAround"/>
+          <aop:after pointcut-ref="businessService" method="doAfter"/>
+          <aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>
+        </aop:aspect>
+    </aop:config> 
+
+    <!-- service -->
+    <bean id="userService" class="com.augmentun.exam.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="questionService" class="com.augmentun.exam.service.impl.QuestionServiceImpl">
+        <property name="questionDao" ref="questionDao"/>
+    </bean>
+    <bean id="examService" class="com.augmentun.exam.service.impl.ExamServiceImpl" scope="singleton">
+        <property name="paperDao" ref="paperDao"/>
+        <property name="examDao" ref="examDao"/>
+        <property name="questionDao" ref="questionDao"/>
+    </bean>
+
+    <bean id="paperService" class="com.augmentun.exam.service.impl.PaperServiceImpl" scope="singleton">
+        <property name="paperDao" ref="paperDao"/>
+        <property name="questionDao" ref="questionDao"/>
+    </bean>
+
+    <bean class="com.augmentun.exam.util.SpringUtil"></bean>
+
+     <!-- block -->
+     <bean id="listQuestionBlock" class="com.augmentun.exam.block.ListQuestionBlock">
+        <property name="template" value="/WEB-INF/jsp/block/question_list_block.jsp"/>
+    </bean>
+
+    <bean id="queryQuestionBlock" class="com.augmentun.exam.block.QueryQuestionBlock">
+        <property name="questionService" ref="questionService"/>
+        <property name="template" value="/WEB-INF/jsp/block/question_query__block.jsp"/>
+    </bean>
+</beans>

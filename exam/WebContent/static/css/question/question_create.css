@@ -1,0 +1,171 @@
+@CHARSET "UTF-8";
+body {
+    font-family: arial regular;
+}
+.form_label {
+    margin-left: 320px;
+    margin-top: 30px;
+    height: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    float: left;
+}
+.form_answer {
+    margin-left: 320px;
+    margin-top: 45px;
+    height: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    float: left;
+}
+#questionNumber {
+    margin-left: 50px;
+    margin-top: 30px;
+    width: 150px;
+    height: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    border: 1px solid #2E4358;
+    border-radius: 3px;
+    text-indent: 20px;
+}
+
+#questionName {
+    width: 480px;
+    height: 80px;
+    margin-left: 70px;
+    margin-top: 30px;
+    padding-top: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    border: 1px solid #2E4358;
+    border-radius: 3px;
+    text-indent: 20px;
+    resize: none;
+ }
+ 
+ .seleted_radio {
+    width: 18px;
+    height: 18px;
+    margin-top: 5px;
+    background: url(../images/BTN_Radio_Selected_16x16.png.png) white no-repeat;
+    float: left;
+ }
+ .unseleted_radio {
+    width: 18px;
+    height: 18px;
+    margin-top: 5px;
+    background: url(../images/BTN_Radio_Unselected_16x16.png.png) white no-repeat;
+    float: left;
+ }
+
+.choice {
+    width: 700px;
+    height: 150px;
+    float: left;
+    margin-top: 45px;
+    margin-left: 85px;
+}
+
+.choice .li_first {
+    width: 700px;
+    height: 25px;
+    
+}
+
+.choice .li_second {
+    width: 700px;
+    height: 25px;
+    margin-top: 15px;
+    
+}
+.choice .unseleted_input {
+    width: 445px;height: 20px;
+    border: 1px solid #2E4358;
+    border-radius: 3px;
+    text-indent: 10px;
+}
+
+.choice .seleted_input {
+    width: 445px;height: 20px;
+    border: 1px solid #2E4358;
+    border-radius: 3px;
+    text-indent: 10px;
+    background-color: #D2DAE3;
+}
+
+.choice_name {
+    width: 10px;
+    height: 20px;
+    margin-left: 5px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #0A0A0A;
+}
+
+.btn_create {
+    position: absolute;
+    left: 480px;
+    bottom: 130px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+ }    
+
+.btn_cancel {
+    position: absolute;
+    left: 660px;
+    bottom: 130px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+ } 
+ 
+.waring_one {
+    width: 200px;
+    height:50px;
+    font-size: 14px;
+    color: red;
+
+ }
+ 
+.waring_choice {
+    width: 200px;
+    height:50px;
+    font-size: 14px;
+    color: red;
+}
+
+.waring_correct {
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: red;
+    position: absolute;
+    left: 460px;
+    top: 220px;
+}
+
+.red_warning_message {
+    position: absolute;
+    top: 0px;
+    left: 550px;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: red;
+    z-index: 1;
+    display: none;
+}

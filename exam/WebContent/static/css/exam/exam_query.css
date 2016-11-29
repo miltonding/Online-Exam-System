@@ -1,0 +1,360 @@
+@CHARSET "UTF-8";
+body {
+    font-family: arial;
+}
+
+#cancel_btn {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background-color: #FE9901;
+    font-family: arial;
+    font-size: 14px;
+    color: #FFFFFF;
+    border-radius: 5px;
+    margin-left: 30px;
+    margin-top: 125px;
+    float: left;
+    cursor: pointer;
+}
+
+
+/* input  */
+.text_date {
+    width: 200px;
+    height: 25px;
+    border: 1px solid #2E4358;
+    border-radius: 3px;
+    font-family: arial regular;
+    font-size: 14px;
+    color: #5E5E5E;
+    text-indent: 10px;
+}
+
+.show_ul .exam_name {
+    width: 500px;
+    height: 25px;
+    overflow: hidden;
+}
+
+.duration_show {
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    font-family: arial regular;
+    font-size: 14px;
+    color: #5E5E5E;
+    text-align: left;
+}
+
+/* button  */
+.can_edit_btn {
+    position: absolute;
+    left: 480px;
+    bottom: 120px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.cannot_edit_btn {
+    position: absolute;
+    left: 480px;
+    bottom: 120px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid grey;
+    border-radius: 2px;
+    background-color: grey;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.exam_cancel_btn {
+    position: absolute;
+    left: 660px;
+    bottom: 120px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.papar_view_btn {
+    position: absolute;
+    left: 840px;
+    bottom: 120px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+/* common  */
+.form_label {
+    margin-left: 320px;
+    margin-top: 30px;
+    height: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    float: left;
+}
+.form_answer {
+    margin-left: 320px;
+    margin-top: 45px;
+    height: 30px;
+    font-size: 14px;
+    color: #0A0A0A;
+    float: left;
+}
+
+
+
+.btn_create {
+    position: absolute;
+    left: 480px;
+    bottom: 130px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+ }    
+
+.btn_cancel {
+    position: absolute;
+    left: 660px;
+    bottom: 130px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+ } 
+ 
+.waring_one {
+    width: 200px;
+    height:50px;
+    font-size: 14px;
+    color: red;
+
+ }
+
+.edit_btn {
+    position: absolute;
+    left: 480px;
+    bottom: 230px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FE9901;
+    border-radius: 2px;
+    background-color: #FE9901;
+    font-family: arial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+#ok_btn {
+    margin-left: 155px;
+}
+
+.show_ul {
+    position: absolute;
+    top: 0px;
+    left: 300px;
+    width:950px; 
+    height: 500px;
+    overflow: hidden;
+    
+}
+
+.show_ul .li_common {
+    width:900px;
+    height: 30px;
+    margin-top: 30px;
+}
+
+.show_ul .li_description {
+     width:900px;
+    height: 60px;
+    margin-top: 30px;
+}
+
+.li_description .label_description {
+    width: 150px;
+    height: 60px;
+    line-height: 60px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+    overflow: hidden;
+}
+
+.li_description .content_description {
+    width: 500px;
+    height: 60px;
+    margin-left: 30px;
+    line-height: 30px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+    word-wrap:break-word;
+    overflow: hidden;
+}
+
+.show_ul .li_settings {
+    width:750px;
+    height: 80px;
+    margin-top: 30px;
+}
+
+.li_settings .label_settings {
+    width: 150px;
+    height: 60px;
+    padding-top: 5px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+    overflow: hidden;
+}
+
+#question_quantity {
+    position:relative;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    text-align: left;
+    overflow: hidden;
+}
+
+#total_score {
+    position: absolute;
+    bottom: 120px;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: left;
+}
+
+#question_points {
+    position: absolute;
+    left: 380px;
+    bottom: 168px;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: left;
+}
+
+#pass_criteria {
+    position: absolute;
+    width: 180px;
+    bottom: 120px;
+    left: 380px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.show_information {
+    position: absolute;
+    left: 120px;
+    top: 0px;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+.li_settings .content_settings {
+    width: 550px;
+    height: 80px;
+    margin-left: 30px;
+    line-height: 30px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+}
+
+
+.show_ul .show_label{
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+    overflow: hidden;
+}
+
+.show_ul .show_content{
+    width: 520px;
+    height: 30px;
+    margin-left: 30px;
+    line-height: 30px;
+    text-align: left;
+    float: left;
+    color: #0A0A0A;
+}
+
+.warning_words {
+    position: absolute;
+    top: 60px;
+    width: 400px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+#time_show {
+    width: 200px;
+    height: 25px;
+    border-radius: 3px;
+    font-family: arial regular;
+    font-size: 16px;
+    text-indent: 10px;
+}
+#show_creator {
+    margin-left: 70px;
+    color: #0A0A0A;
+}
+#creator_name {
+    margin-left: 40px;
+}
+
+#warning_effective {
+    position: absolute;
+    bottom: 80px;
+    width: 300px;
+    height: 30px;
+    line-height: 30px;
+    text-align: left;
+    color: red;
+}
